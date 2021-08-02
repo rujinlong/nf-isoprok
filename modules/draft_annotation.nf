@@ -1,6 +1,5 @@
 process DFAST {
     tag "$sampleID"
-    label "medium"
     publishDir "$params.outdir/$sampleID/p02_dfast"
     publishDir "$params.report/$sampleID", pattern: "statistics.txt"
 

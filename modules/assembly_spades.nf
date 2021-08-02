@@ -1,6 +1,5 @@
 process ASSEMBLY_SPADES {
     tag "$sampleID"
-    label "big"
     publishDir "$params.outdir/$sampleID/p03_assembly", pattern: "*.fna"
     publishDir "$params.report/$sampleID", pattern: "*.fna"
     

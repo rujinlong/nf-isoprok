@@ -1,6 +1,5 @@
 process ANNO_ARG {
     tag "$sampleID"
-    label "small"
     publishDir "$params.outdir/$sampleID/p03_anno_ARG"
     publishDir "$params.report/$sampleID"
 

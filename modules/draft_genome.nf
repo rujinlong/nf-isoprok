@@ -1,6 +1,5 @@
 process RAGTAG {
     tag "$sampleID"
-    label "small"
     publishDir "$params.outdir/$sampleID/p01_RagTag"
     publishDir "$params.report/$sampleID", pattern: "*.stats"
 

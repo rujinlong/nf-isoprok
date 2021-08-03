@@ -35,6 +35,8 @@ workflow {
     }
 
     if( params.ref_genome ) {
+        // If reference is provided, it will be used for all samples
+        // Sample-dependent reference is not yet supported
         ref_ch = channel.fromPath(params.ref_genome)
         RAGTAG(ref_ch, ASSEMBLY_SPADES.out.contigs_ch)
         draft_genome = RAGTAG.out.genome_ch

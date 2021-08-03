@@ -4,7 +4,7 @@ process RAGTAG {
     publishDir "$params.report/$sampleID", pattern: "*.stats"
 
     input:
-    tuple val(sampleID), path(ref_fna)
+    path(ref_fna)
     tuple val(sampleID), path(scaffolds)
 
     output:

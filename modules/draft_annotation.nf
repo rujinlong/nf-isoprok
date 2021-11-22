@@ -23,3 +23,27 @@ process DFAST {
     ln -s dfast_output/statistics.txt .
     """
 }
+
+
+process PROKKA {
+    tag "$sampleID"
+    publishDir "$params.outdir/$sampleID/p02_prokka"
+
+    input:
+    tuple val(sampleID), path(genome)
+    
+    output:
+    path("output_prokka/*")
+    tuple val(sampleID), path("output_prokka/${sampleID}.fna"), emit: cds_ch
+
+    when:
+    params.mode == 'genome' || params.mode == "all"
+
+    """
+    if [ "$params.with_ref" == "true" ];then
+        singularity exec ~/prokka.sif --cpus $task.cpus --proteins $params.ref --outdir output_prokka --prefix $sampleID --rawproduct --centre X --compliant $genome
+    else
+        singularity exec ~/prokka.sif --cpus $task.cpus --outdir output_prokka --prefix $sampleID --rawproduct --centre X --compliant $genome
+    fi
+    """
+}

@@ -17,6 +17,7 @@ include { CLEAN_READS } from './modules/clean_reads'
 include { ASSEMBLY_SPADES } from './modules/assembly_spades'
 include { RAGTAG } from './modules/draft_genome'
 include { DFAST } from './modules/draft_annotation'
+include { PROKKA } from './modules/draft_annotation'
 include { ANNO_ARG } from './modules/anno_ARG'
 include { MULTIQC } from './modules/multiqc'
 
@@ -34,18 +35,19 @@ workflow {
         MULTIQC(FASTQC.out.fastqc_results_ch.flatten().concat(CLEAN_READS.out.fastp_json_ch.flatten()).collect())
     }
 
-    if( params.ref_genome ) {
+    if( params.ref ) {
         // If reference is provided, it will be used for all samples
         // Sample-dependent reference is not yet supported
-        ref_ch = channel.fromPath(params.ref_genome)
+        ref_ch = channel.fromPath(params.ref)
         RAGTAG(ref_ch, ASSEMBLY_SPADES.out.contigs_ch)
         draft_genome = RAGTAG.out.genome_ch
     } else {
         draft_genome = ASSEMBLY_SPADES.out.contigs_ch
     }
 
-    DFAST(draft_genome)
-    ANNO_ARG(DFAST.out.cds_ch)
+    // DFAST(draft_genome)
+    PROKKA(draft_genome)
+    ANNO_ARG(PROKKA.out.cds_ch)
 }
 
     

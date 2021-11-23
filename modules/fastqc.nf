@@ -8,7 +8,7 @@ process FASTQC {
     path("*_fastqc.{zip,html}"), emit: fastqc_results_ch
 
     when:
-    params.mode == "fastqc" || params.mode == "clean" || params.mode == "all"
+    params.mode == "fastqc" || params.mode == "clean"
 
     """
     fastqc -t $task.cpus $reads

@@ -28,6 +28,7 @@ process DFAST {
 process PROKKA {
     tag "$sampleID"
     publishDir "$params.outdir/$sampleID/p05_prokka"
+    publishDir "$params.report/$sampleID", pattern: "output_prokka/*"
 
     input:
     tuple val(sampleID), path(genome)

@@ -1,6 +1,6 @@
 process ANNO_ARG {
     tag "$sampleID"
-    publishDir "$params.outdir/$sampleID/p03_anno_ARG"
+    publishDir "$params.outdir/$sampleID/p06_anno_ARG"
     publishDir "$params.report/$sampleID"
 
     input:

@@ -1,6 +1,6 @@
 process DFAST {
     tag "$sampleID"
-    publishDir "$params.outdir/$sampleID/p02_dfast"
+    publishDir "$params.outdir/$sampleID/p05_dfast"
     publishDir "$params.report/$sampleID", pattern: "statistics.txt"
 
     input:
@@ -27,7 +27,7 @@ process DFAST {
 
 process PROKKA {
     tag "$sampleID"
-    publishDir "$params.outdir/$sampleID/p02_prokka"
+    publishDir "$params.outdir/$sampleID/p05_prokka"
 
     input:
     tuple val(sampleID), path(genome)
@@ -41,9 +41,9 @@ process PROKKA {
 
     """
     if [ "$params.with_ref" == "true" ];then
-        singularity exec ~/prokka.sif --cpus $task.cpus --proteins $params.ref --outdir output_prokka --prefix $sampleID --rawproduct --centre X --compliant $genome
+        singularity exec ~/prokka.sif prokka --cpus $task.cpus --proteins $params.ref --outdir output_prokka --prefix $sampleID --rawproduct --centre X --compliant $genome
     else
-        singularity exec ~/prokka.sif --cpus $task.cpus --outdir output_prokka --prefix $sampleID --rawproduct --centre X --compliant $genome
+        singularity exec ~/prokka.sif prokka --cpus $task.cpus --outdir output_prokka --prefix $sampleID --rawproduct --centre X --compliant $genome
     fi
     """
 }
